@@ -5112,6 +5112,11 @@ ul.ft-link li a i {
 
 }
 
+.profile-ava img.wid{
+    width: 200px;
+    height: 200px;
+}
+
 .profile-ava img.simple{
 
     border-radius: 50%;

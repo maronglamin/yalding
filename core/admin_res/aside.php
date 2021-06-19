@@ -10,7 +10,7 @@
                       </a>
           </li>
           <li>
-            <a class="" href="widgets.html">
+            <a class="" href="<?=PROOT?>admin/components/admission_list.php">
                           <i class="icon_genius"></i>
                           <span>Enrolled students</span>
                       </a>

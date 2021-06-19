@@ -12,7 +12,8 @@ if (mysqli_connect_errno()) {
 // include and require resources and usable funvtion 
 include(ROOT . DS . "core" . DS . "res" . DS . "head.php");
 require_once(ROOT . DS . "func" . DS . "func.php");
-require_once(ROOT . DS . "core" . DS . "query.php");
+require_once(ROOT . DS . "func" . DS . "helpers.php");
+require_once(ROOT . DS . "core" . DS . "sql_query.php");
 
 // start session 
 session_start();

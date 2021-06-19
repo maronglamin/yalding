@@ -12,15 +12,9 @@ $id = (int)$user_data['adm_no'];
 $sql = $db->query("SELECT * FROM `administrators` WHERE `adm_no` = $id");
 $arr = array();
 $results = mysqli_fetch_assoc($sql);
+print page_name('Dashboard');
 
-  //dnd($results);
 ?>
-<div class="row">
-  <div class="col-lg-12">
-    <h3 class="page-header"><i class="fa fa-laptop"></i> Dashboard</h3>
-  </div>
-</div>
-
 <div class="row">
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
             <div class="info-box blue-bg">

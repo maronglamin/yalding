@@ -23,6 +23,17 @@ function sanitize($dirty) {
     return htmlentities($dirty, ENT_QUOTES, "UTF-8");
 }
 
+function page_name($name) 
+{
+  $html = '<div class="row">';
+  $html .= '<div class="col-lg-12">';
+  $html .= '<h3 class="page-header"><i class="fa fa-laptop"></i>'. $name .'</h3>';
+  $html .= '</div>';
+  $html .= '</div>';
+
+  return $html;
+}
+
 function is_logged_in() {
     if (isset($_SESSION['ADMIN_USER_SESSIONS']) && $_SESSION['ADMIN_USER_SESSIONS'] > 0) {
         return true;
@@ -71,11 +82,11 @@ function login_stud($user_id) {
 
 function redirect($location) {
     if(!headers_sent()) {
-      header('Location: '.PROOT.$location);
+      header('Location: '.$location);
       exit();
     } else {
       echo '<script type="text/javascript">';
-      echo 'window.location.href="'.PROOT.$location.'";';
+      echo 'window.location.href="'.$location.'";';
       echo '</script>';
       echo '<noscript>';
       echo '<meta http-equiv="refresh" content="0;url='.$location.'" />';
@@ -88,6 +99,10 @@ function day_month($date)
     return date("d/m/Y", strtotime($date));
 }
 
+function time_format($date) {
+  return date("D M Y", strtotime($date));
+
+}
 function selQuery($table, $id_field, $id) {
   global $db;
   $arr = array();
