@@ -8,22 +8,10 @@ if (!is_logged_in()) {
 
 include(ROOT . DS . "core" . DS . "admin_res" . DS . "topnav.php");
 include(ROOT . DS . "core" . DS . "admin_res" . DS . "aside.php");
-print page_name('students under list');
-while($stud_adm_data = mysqli_fetch_assoc($get_stud_adm_data)) {
-        print html_table( // three prams 
-            // table heads values
-            ['Date filled','First name', 'Family Name','Previous', ' '],
-            // table data values 
-            [
-                $stud_adm_data['stud_fname'], 
-                $stud_adm_data['stud_lname'],
-                $stud_adm_data['pschool'],
-                time_format($stud_adm_data['date_form_filled']),
-                '<a href="admission_details.php?stud_id='.$stud_adm_data['stud_id'].'" class="btn btn-primary">Details</a>'
-            ],
-        // table header title name 
-        'Student data collected from filled form on admission');
-    }
 
+print page_name('students under list');
+print table_wrapper('Student data collected from filled form on admission');
+
+// table heads values and the table data values give the index from the database. three prams, 2 array and string.
+print html_table(['First name', 'Family Name','Previous','Student address','Action'], $get_stud_adm_data,['stud_fname', 'stud_lname', 'pschool','address','stud_id']);
 include(ROOT . DS . "core" . DS . "res" . DS . "footer.php");
-    

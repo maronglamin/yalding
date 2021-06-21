@@ -53,3 +53,4 @@ print page_name('All information submitted during admission');
         </table>
     </section>
 </div>
+<?php include(ROOT . DS . "core" . DS . "res" . DS . "footer.php");

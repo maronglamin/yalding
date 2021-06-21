@@ -25,25 +25,23 @@ $errors = [];
         if ($_SERVER['REQUEST_METHOD'] == 'POST')
          {
             $filename =  $_FILES['pasphoto']['name'];
-
-            
             // get the file extension
             $extension = pathinfo($filename, PATHINFO_EXTENSION);
-            $destination = '..'. DS. 'stud_passImage'. DS . $filename;
-        
+            $destination = '..'.'/stud_passImage/' . $filename;        
             // the physical file on a temporary uploads directory on the server
             $file = $_FILES['pasphoto']['tmp_name'];
             $size = $_FILES['pasphoto']['size'];
-        
+            // allowed extensions
             if (!in_array($extension, ['jpg', 'png']))
              {
                 $errors[] .= 'Photo format isn\'t allowed';
               } 
+              // upload size 
               elseif ($_FILES['pasphoto']['size'] > 1000000) 
               { 
                 $errors[] .= 'file shouldn\'t be larger than 1Megabyte';
               }
-        
+              // if no file is selected
             if ($filename == '') 
             {
                 $errors[] .= 'No passport size photo selected';
