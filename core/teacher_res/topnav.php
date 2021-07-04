@@ -216,7 +216,7 @@
           <span class="profile-ava">
             <img alt="" src="img/avatar1_small.jpg">
           </span>
-          <span class="username"><?= $user_data['first']; ?></span>
+          <span class="username"><?=$user_data['fname']; ?></span>
           <b class="caret"></b>
         </a>
         <ul class="dropdown-menu extended logout">

@@ -1,5 +1,22 @@
 <?php
 
+function text_area($label, $name, $inputAttrs = [], $divAttrs = [], $errors = [], $stringValue)
+{
+    $inputAttrs = append_error_class($inputAttrs, $errors, $name, 'is-invalid');
+    $divString = stringifyAttrs($divAttrs);
+    $inputString = stringifyAttrs($inputAttrs);
+    $id = str_replace('[]', '', $name);
+    $html = '<div' . $divString . '>';
+    $html .= '<label class="col-sm-2 control-label" for="' . $id . '">' . $label . '</label>';
+    $html .= '<div class="col-sm-10">';
+    $html .= '<textarea id="' . $id . '" name="' . $name . ' " class="form-control ckeditor" required rows="6" ' . $inputString . '></textarea>';
+    $html .= '<span class="help-block">' . $stringValue . '</span>';
+    $html .= '<span class="invalid-feedback">' . errorMsg($errors, $name) . '</span>';
+    $html .= '</div>';
+    $html .= '</div>';
+    return $html;
+}
+
 function options_for_select($options, $selectedValue)
 {
     $html = "";
@@ -34,7 +51,24 @@ function inputBlock($type, $label, $name, $value = '', $inputAttrs = [], $divAtt
     $html = '<div' . $divString . '>';
     $html .= '<label class="col-sm-2 control-label" for="' . $id . '">' . $label . '</label>';
     $html .= '<div class="col-sm-10">';
-    $html .= '<input type="' . $type . '" id="' . $id . '" name="' . $name . '" value="' . $value . '"' . $inputString . ' />';
+    $html .= '<input type="' . $type . '" id="' . $id . '" required name="' . $name . '" value="' . $value . '"' . $inputString . ' />';
+    $html .= '<span class="help-block">' . $stringValue . '</span>';
+    $html .= '<span class="invalid-feedback">' . errorMsg($errors, $name) . '</span>';
+    $html .= '</div>';
+    $html .= '</div>';
+    return $html;
+}
+
+function inputDisable($type, $label, $name, $value = '', $inputAttrs = [], $divAttrs = [], $errors = [], $stringValue)
+{
+    $inputAttrs = append_error_class($inputAttrs, $errors, $name, 'is-invalid');
+    $divString = stringifyAttrs($divAttrs);
+    $inputString = stringifyAttrs($inputAttrs);
+    $id = str_replace('[]', '', $name);
+    $html = '<div' . $divString . '>';
+    $html .= '<label class="col-sm-2 control-label" for="' . $id . '">' . $label . '</label>';
+    $html .= '<div class="col-sm-10">';
+    $html .= '<input type="' . $type . '" id="' . $id . '" required disabled name="' . $name . '" value="' . $value . '"' . $inputString . ' />';
     $html .= '<span class="help-block">' . $stringValue . '</span>';
     $html .= '<span class="invalid-feedback">' . errorMsg($errors, $name) . '</span>';
     $html .= '</div>';
@@ -70,7 +104,7 @@ function selectBlock($label, $name, $value, $options, $inputAttrs = [], $divAttr
     $html = '<div' . $divString . '>';
     $html .= '<label for="' . $id . '" class="control-label col-lg-2">' . $label . '</label>';
     $html .= '<div class="col-sm-10">';
-    $html .= '<select id="' . $id . '" name="' . $name . '" ' . $inputString . '>' . options_for_select($options, $value) . '</select>';
+    $html .= '<select id="' . $id . '" required name="' . $name . '" ' . $inputString . '>' . options_for_select($options, $value) . '</select>';
     $html .= '<span class="invalid-feedback">' . errorMsg($errors, $name) . '</span>';
     $html .= '</div>';
     $html .= '</div>';
@@ -94,7 +128,7 @@ function table_td($arr_data, $index = [], $url, $getVariable)
     while ($result = mysqli_fetch_assoc($arr_data)) {
         foreach ($index as $val) {
             if ($val === $lastIndex) {
-                $id = $result['stud_id'];
+                $id = $result[$getVariable];
                 $string .= '<td><a href="' . $url . '.php?' . $getVariable . '=' . $id . '" class="btn btn-primary">Details</a></td>';
             } else {
                 $string .= '<td>' . $result[$val] . '</td>';
@@ -160,14 +194,16 @@ function htmlTable($th = [], $queryStatement, $index = [])
     return $html;
 }
 
-function htmlCard($divAttrs = [])
+function htmlCardHead($divAttrs = [], $cardTitle)
 {
     $divString = stringifyAttrs($divAttrs);
-    $html = '<div' . $divString . '>';
-    $html .= '<section class="panel">';
-    $html .= '<div class="panel-body progress-panel">';
-    $html .= '<div class="row">';
-    $html .= '<div class="col-lg-8 task-progress pull-left"><h1>Review information</h1>';
-    $html .= '</div></div></div>';
+    $html = '<div ' . $divString . '>';
+    $html .= '<div class="row"><section class="panel">';
+    $html .= '<header class="panel-heading">' . $cardTitle . '</header><div class="panel-body">';
     return $html;
+}
+
+function cardClose()
+{
+    $html = '</div></section></div></div>';
 }

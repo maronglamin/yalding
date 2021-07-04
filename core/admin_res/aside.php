@@ -12,12 +12,30 @@
           <li class="sub-menu">
             <a href="javascript:;" class="">
               <i class="icon_document_alt"></i>
-              <span>Students</span>
+              <span>Admission</span>
               <span class="menu-arrow arrow_carrot-right"></span>
             </a>
             <ul class="sub">
               <li><a class="" href="<?= PROOT ?>admin/components/admission_list.php">Enrollment</a></li>
               <li><a class="" href="<?= PROOT ?>admin/components/enrolled.php">Enrolled</a></li>
+            </ul>
+          </li>
+          <li>
+            <a class="" href="<?= PROOT ?>admin/components/class.php">
+              <i class="icon_genius"></i>
+              <span>Assign classes</span>
+            </a>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+              <i class="icon_document_alt"></i>
+              <span>Classes</span>
+              <span class="menu-arrow arrow_carrot-right"></span>
+            </a>
+            <ul class="sub">
+              <?php while ($result = mysqli_fetch_assoc($class)) : ?>
+                <li><a class="" href="<?= PROOT ?>admin/components/level.php?class=<?= $result['class_id'] ?>"><?= $result['grade_name']; ?></a></li>
+              <?php endwhile; ?>
             </ul>
           </li>
           <li class="sub-menu">
@@ -43,12 +61,6 @@
               <li><a class="" href="form_validation.htmlGrade">Grade 8</a></li>
               <li><a class="" href="form_validation.htmlGrade">Grade 7</a></li>
             </ul>
-          </li>
-          <li>
-            <a class="" href="widgets.html">
-              <i class="icon_genius"></i>
-              <span>Assign classes</span>
-            </a>
           </li>
           <li class="sub-menu">
             <a href="javascript:;" class="">
