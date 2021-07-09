@@ -75,12 +75,6 @@
 
             </ul>
           </li>
-          <li>
-            <a class="" href="widgets.html">
-              <i class="icon_genius"></i>
-              <span>Admission</span>
-            </a>
-          </li>
         </ul>
         <!-- sidebar menu end-->
       </div>

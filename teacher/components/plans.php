@@ -68,7 +68,7 @@ $divAttrs = ['class' => 'col-lg-10 col-sm-offset-1']; ?>
     }
     ?>
     <?= inputBlock('text', 'Subject *', 'subj', '', ['class' => 'form-control', 'placeholder' => 'Write the name of the subject for planning'], ['class' => 'form-group'], [], ''); ?>
-    <?= selectBlock('Class', 'class', ['', 'g7c', 'g7s', 'g8c', 'g8s', 'g9c', 'g0s'], ['', 'Grade 7 cirle', 'Grade 7 Square', 'Grade 8 circle', 'Grade 9 circle', 'Grade 9 square'], ['class' => 'form-control', 'placeholder' => 'Write the name of the subject for planning'], ['class' => 'form-group'], []); ?>
+    <?= selectBlock('Class', 'class', ['', '1', '2', '3', '4', '5', '6'], ['', 'Grade 7 cirle', 'Grade 7 Square', 'Grade 8 circle', 'Grade 9 circle', 'Grade 9 square'], ['class' => 'form-control', 'placeholder' => 'Write the name of the subject for planning'], ['class' => 'form-group'], []); ?>
     <?= inputBlock('date', 'Date *', 'date', '', ['class' => 'form-control'], ['class' => 'form-group'], [], ''); ?>
     <?= inputBlock('time', 'Start Time *', 'start-time', '', ['class' => 'form-control'], ['class' => 'form-group'], [], ''); ?>
     <?= inputBlock('time', 'End Time *', 'end-time', '', ['class' => 'form-control'], ['class' => 'form-group'], [], ''); ?>

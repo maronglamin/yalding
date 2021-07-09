@@ -53,13 +53,55 @@ $divAttrs = ['class' => 'col-lg-10 col-sm-offset-1']; ?>
         redirect('dashboard.php');
     }
     ?>
-    <?= text_area('General Objectives*', 'general', ['class' => 'form-control', 'placeholder' => 'Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective') ?>
-    <?= text_area('Specific Objectives *', 'specific', ['class' => 'form-control', 'placeholder' => 'Write the name of the subject for planning'], ['class' => 'form-group'], [], '') ?>
-    <?= text_area('Procedure*', 'procedure', ['class' => 'form-control', 'placeholder' => 'Write the name of the subject for planning'], ['class' => 'form-group'], [], '', '') ?>
-    <?= text_area('Activities*', 'activities', ['class' => 'form-control', 'placeholder' => 'Write the name of the subject for planning'], ['class' => 'form-group'], [], '') ?>
-    <?= text_area('Reference*', 'reference', ['class' => 'form-control', 'placeholder' => 'Write the name of the subject for planning'], ['class' => 'form-group'], [], '') ?>
-    <?= text_area('Summary*', 'summary', ['class' => 'form-control', 'placeholder' => 'Write the name of the subject for planning'], ['class' => 'form-group'], [], '') ?>
-    <?= text_area('Evaluation*', 'evaluation', ['class' => 'form-control', 'placeholder' => 'Write the name of the subject for planning'], ['class' => 'form-group'], [], '') ?>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="general">General Objectives*</label>
+        <div class="col-sm-10">
+            <textarea id="general" name="general" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+            <span class="help-block">The objectives</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="specific">Specific Objectives *</label>
+        <div class="col-sm-10">
+            <textarea id="specific" name="specific" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+            <span class="help-block">The objectives</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="procedure">Procedure*</label>
+        <div class="col-sm-10">
+            <textarea id="procedure" name="procedure" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+            <span class="help-block">The objectives</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="activities">Activities*</label>
+        <div class="col-sm-10">
+            <textarea id="activities" name="activities" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+            <span class="help-block">The objectives</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="reference">Reference*</label>
+        <div class="col-sm-10">
+            <textarea id="reference" name="reference" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+            <span class="help-block">The objectives</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="summary">Summary*</label>
+        <div class="col-sm-10">
+            <textarea id="summary" name="summary" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+            <span class="help-block">The objectives</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="evaluation">Evaluation*</label>
+        <div class="col-sm-10">
+            <textarea id="evaluation" name="evaluation" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+            <span class="help-block">The objectives</span>
+        </div>
+    </div>
     <?= submitBlock('Next', [], [], 'plans.php') ?>
 </form>
 <?= cardClose() ?>

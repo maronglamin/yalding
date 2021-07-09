@@ -39,7 +39,7 @@ if (isset($_GET['cid'])) {
         print $html;
 
         # display all information about the student.
-        
+
     }
 
     print cardClose();
