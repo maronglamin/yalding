@@ -22,88 +22,78 @@ $evaluation = ((isset($_POST['evaluation'])) ? sanitize($_POST['evaluation']) : 
 # define an empty array to hold errrors
 $errors = [];
 
-# get the current user's id
-$staff_id = $user_data['id'];
+if (isset($_GET['add'])) {
 
-// the page title
-print page_name('Full content');
+    $tbl_id = (int)sanitize($_GET['add']);
 
-$divAttrs = ['class' => 'col-lg-10 col-sm-offset-1']; ?>
+    // the page title
+    print page_name('Full content');
 
-<?= htmlCardHead($divAttrs, 'Lesson planning worksheets'); ?>
-<form class="form-horizontal" action="#" method="POST" enctype="multipart/form-data">
-    <?php
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $divAttrs = ['class' => 'col-lg-10 col-sm-offset-1']; ?>
 
-        $dataValue = [
-            'staff_id'              => $staff_id,
-            'general-objective'     => $general_obj,
-            'specific-objective'    => $specific_obj,
-            'procedure'             => $procedure,
-            'activities'            => $activities,
-            'reference'             => $reference,
-            'summary'               => $summary,
-            'evaluation'            => $evaluation
-        ];
+    <?= htmlCardHead($divAttrs, 'Lesson planning worksheets'); ?>
+    <form class="form-horizontal" action="#" method="POST" enctype="multipart/form-data">
+        <?php
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // insert into a different location
+            $db->query("UPDATE `lesson_plan` SET `general_objective`='{$general_obj}',`specific_objective`='{$specific_obj}',`procedures`='{$procedure}',`activities`='{$activities}',`summary`='{$summary}',`evaluation`='{$evaluation}' WHERE `id` = '{$tbl_id}'");
+            $_SESSION['success_mesg'] .= 'Changes saved! lesson planned and the office will audit it on permission';
+            redirect('dashboard.php?plan=' . $tbl_id);
+        }
+        ?>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="general">General Objectives*</label>
+            <div class="col-sm-10">
+                <textarea id="general" name="general" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+                <span class="help-block">The objectives</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="specific">Specific Objectives *</label>
+            <div class="col-sm-10">
+                <textarea id="specific" name="specific" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+                <span class="help-block">The objectives</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="procedure">Procedure*</label>
+            <div class="col-sm-10">
+                <textarea id="procedure" name="procedure" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+                <span class="help-block">The objectives</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="activities">Activities*</label>
+            <div class="col-sm-10">
+                <textarea id="activities" name="activities" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+                <span class="help-block">The objectives</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="reference">Reference*</label>
+            <div class="col-sm-10">
+                <textarea id="reference" name="reference" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+                <span class="help-block">The objectives</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="summary">Summary*</label>
+            <div class="col-sm-10">
+                <textarea id="summary" name="summary" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+                <span class="help-block">The objectives</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="evaluation">Evaluation*</label>
+            <div class="col-sm-10">
+                <textarea id="evaluation" name="evaluation" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
+                <span class="help-block">The objectives</span>
+            </div>
+        </div>
+        <?= submitBlock('Next', [], [], 'plans.php') ?>
+    </form>
+    <?= cardClose() ?>
 
 
-        $jSonDataValue = json_encode($dataValue);
-        $db->query("UPDATE `lesson_plan` SET `second_record`='{$jSonDataValue}' WHERE `staff_id` = '{$staff_id}'");
-        $_SESSION['success_mesg'] .= 'Changes saved! lesson planned and the office will audit it on permission';
-        redirect('dashboard.php');
-    }
-    ?>
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="general">General Objectives*</label>
-        <div class="col-sm-10">
-            <textarea id="general" name="general" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
-            <span class="help-block">The objectives</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="specific">Specific Objectives *</label>
-        <div class="col-sm-10">
-            <textarea id="specific" name="specific" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
-            <span class="help-block">The objectives</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="procedure">Procedure*</label>
-        <div class="col-sm-10">
-            <textarea id="procedure" name="procedure" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
-            <span class="help-block">The objectives</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="activities">Activities*</label>
-        <div class="col-sm-10">
-            <textarea id="activities" name="activities" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
-            <span class="help-block">The objectives</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="reference">Reference*</label>
-        <div class="col-sm-10">
-            <textarea id="reference" name="reference" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
-            <span class="help-block">The objectives</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="summary">Summary*</label>
-        <div class="col-sm-10">
-            <textarea id="summary" name="summary" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
-            <span class="help-block">The objectives</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label" for="evaluation">Evaluation*</label>
-        <div class="col-sm-10">
-            <textarea id="evaluation" name="evaluation" class="form-control ckeditor" required rows="6" class="form-control" placeholder="Write the name of the subject for planning'], ['class' => 'form-group'], [], 'the general objective"></textarea>
-            <span class="help-block">The objectives</span>
-        </div>
-    </div>
-    <?= submitBlock('Next', [], [], 'plans.php') ?>
-</form>
-<?= cardClose() ?>
-
-<?php include(ROOT . DS . "core" . DS . "res" . DS . "footer.php");
+<?php }
+include(ROOT . DS . "core" . DS . "res" . DS . "footer.php");

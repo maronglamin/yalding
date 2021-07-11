@@ -17,6 +17,15 @@ $ids = $user_data['id'];
 
 $sql = $db->query("SELECT * FROM `lesson_plan` WHERE `staff_id` = '{$id}'");
 
+if (isset($_GET['submit'])) {
+  $id = (int)sanitize($_GET['submit']);
+
+  # update the db and set permit to 1
+  $db->query("UPDATE `lesson_plan` SET `permit` = '1' WHERE `id` = '{$id}'");
+  $_SESSION['success_mesg'] .= 'Senior Staff permitted and can see you lesson plans.';
+  redirect('dashboard.php');
+}
+
 
 if (isset($_GET['plan'])) {
   $plan_id = (int)sanitize($_GET['plan']);
@@ -46,52 +55,44 @@ if (isset($_GET['plan'])) {
     </div>
     <div class="col-lg-4">
       <strong>Unit Topic: </strong>
-      <p><?= $plans[7]; ?></p>
+      <p><?= $plans[6]; ?></p>
     </div>
     <div class="col-lg-4">
       <strong>Specific Topic: </strong>
-      <p><?= $plans[8] ?></p>
+      <p><?= $plans[7] ?></p>
     </div>
   <?php endwhile; ?>
   <br>
   <h3 class="text-center text-warning">Wriiten Plans</h3>
 
-  <?php while ($result2 = mysqli_fetch_assoc($sql2)) :
-    $full_text = json_decode($result2["second_record"]);
-
-    // dnd($full_text);
-
-    $plan_sec = [];
-    foreach ($full_text as $planned) {
-      $plan_sec[] = $planned;
-    }
-  ?>
+  <?php while ($result2 = mysqli_fetch_assoc($sql2)) : ?>
+    <a href="next_plan.php?add=<?= $result2['id'] ?>" class="btn btn-primary pull-right">Add Contents</a><br><br>
     <div class="col-lg-12">
       <strong>General Objective: </strong>
-      <p><?= nl2br($plan_sec[1]); ?></p>
+      <p><?= nl2br($result2['general_objective']); ?></p>
     </div>
     <div class="col-lg-12">
       <strong>specific-objective: </strong>
-      <p><?= nl2br($plan_sec[2]); ?></p>
+      <p><?= nl2br($result2['specific_objective']); ?></p>
     </div>
     <div class="col-lg-12">
       <strong>procedure: </strong>
-      <p><?= nl2br($plan_sec[3]); ?></p>
+      <p><?= nl2br($result2['procedures']); ?></p>
     </div>
     <div class="col-lg-12">
       <strong>activities: </strong>
-      <p><?= nl2br($plan_sec[4]); ?></p>
+      <p><?= nl2br($result2['activities']); ?></p>
     </div>
     <div class="col-lg-12">
       <strong>Summary: </strong>
-      <p><?= nl2br($plan_sec[5]); ?></p>
+      <p><?= nl2br($result2['summary']); ?></p>
     </div>
     <div class="col-lg-12">
       <strong>evaluation: </strong>
-      <p><?= nl2br($plan_sec[6]); ?></p>
+      <p><?= nl2br($result2['evaluation']); ?></p>
     </div>
 
-
+    <a href="dashboard.php?submit=<?= $result2['id'] ?>" class="btn btn-primary">Permit senior teacher</a>
   <?php endwhile; ?>
 
 <?php } else {
@@ -142,26 +143,25 @@ if (isset($_GET['plan'])) {
         <thead>
           <th>DATES</th>
           <th>Start Time</th>
-          <th>End Time</th>
+          <th>Period</th>
           <th>Class</th>
           <th>Subject</th>
           <th>Unit Topic</th>
-          <th>Specific Topic</th>
           <th>Details</th>
         </thead>
         <tbody>
-          <tr>
-            <?php while ($result = mysqli_fetch_assoc($sql)) :
-              $plan_data = json_decode($result['first_record']);
-              $plans = [];
-              foreach ($plan_data as $plan) {
-                $plans[] = $plan;
-              }
-            ?>
 
+          <?php while ($result = mysqli_fetch_assoc($sql)) :
+            $plan_data = json_decode($result['first_record']);
+            $plans = [];
+            foreach ($plan_data as $plan) {
+              $plans[] = $plan;
+            }
+          ?>
+            <tr>
               <td><?= day_month($plans[3]); ?></td>
-              <td><?= $plans[4]; ?></td>
-              <td><?= $plans[5]; ?></td>
+              <td><?= $plans[3]; ?></td>
+              <td><?= $plans[5] . ' Periods'; ?></td>
               <?php if ($plans[2] == 1) : ?>
                 <td>Grade 7 Circle</td>
               <?php elseif ($plans[2] == 2) : ?>
@@ -177,12 +177,12 @@ if (isset($_GET['plan'])) {
               <?php endif; ?>
               <td><?= $plans[1]; ?></td>
               <td><?= $plans[7]; ?></td>
-              <td><?= $plans[8]; ?></td>
               <td>
                 <a href="dashboard.php?plan=<?= $result['id'] ?>" class="btn btn-primary">checkout</a>
               </td>
-            <?php endwhile; ?>
-          </tr>
+            </tr>
+          <?php endwhile; ?>
+
         </tbody>
       </table>
     </section>
