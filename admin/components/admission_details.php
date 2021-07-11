@@ -36,7 +36,7 @@ if (isset($_GET['unenroll'])) {
             <tbody>
                 <?php while ($info = mysqli_fetch_assoc($get_stud_adm_data_id)) : ?>
                     <div class="col-lg-12">
-                        <div class="text-center profile-ava"><img class="simple wid" src="<?= PROOT . $info['path']; ?>" alt="image not found">
+                        <div class="text-center profile-ava"><img class="simple wid" src="<?= PROOT . 'admission' . $info['path']; ?>" alt="image not found">
                             <p>The student's passport photo</p>
                             <?php if ($info['enrolled'] == '1') : ?>
                                 <button class="btn btn-success pull-right">Enrolled</button>

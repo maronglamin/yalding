@@ -34,7 +34,7 @@ if (isset($_GET['cid'])) {
     print htmlCardHead($divAttrs, 'student full information');
     while ($sql = mysqli_fetch_assoc($result)) {
         # display the profile photo.
-        $html = '<div class="text-center profile-ava"><img class="simple wid" src="' . PROOT . $sql['link'] . '" alt="image not found">';
+        $html = '<div class="text-center profile-ava"><img class="simple wid" src="' . PROOT  . 'admission' . $sql['link'] . '" alt="image not found">';
         $html .= '<h2 class="list-group-item-heading">' . $sql['fname'] . ' ' . $sql['lname'] . '</h2>';
         print $html;
 

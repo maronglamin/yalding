@@ -28,7 +28,7 @@ if (isset($_GET['stud_id'])) {
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $db->query("INSERT INTO `stud_class`(`stud_number`, `stud_class`, `stud_adm_no`) VALUES ('{$stud_number}', '{$class}', '{$id}')");
-        $db->query("UPDATE `stud_adm_info` SET `email`= '$mail' WHERE `stud_id` = '{$id}'");
+        $db->query("UPDATE `stud_adm_info` SET `new_email`= '$mail' WHERE `stud_id` = '{$id}'");
         $db->query("UPDATE `stud_adm_info` SET `status` = '1' WHERE `stud_id` = '{$id}'");
         $_SESSION['success_mesg'] .= 'Class assigned successfully!';
         redirect('class.php');

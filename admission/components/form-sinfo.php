@@ -51,7 +51,7 @@ $errors = [];
                                     $destination = ltrim($destination, '..');
                                     $db->query("UPDATE `stud_adm_info` SET `path` = '{$destination}' WHERE `stud_id` = '{$id}'");
                                     $_SESSION['success_mesg'] .= 'All done! time to check';
-                                    redirect("admission/components/dashboard.php");
+                                    redirect("dashboard.php");
                                 }
                             }
                         }
