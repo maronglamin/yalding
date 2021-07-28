@@ -38,6 +38,12 @@
               <?php endwhile; ?>
             </ul>
           </li>
+          <li>
+            <a class="" href="<?= PROOT ?>admin/components/teacher.php">
+              <i class="icon_genius"></i>
+              <span>Assign teachers</span>
+            </a>
+          </li>
           <li class="sub-menu">
             <a href="javascript:;" class="">
               <i class="icon_document_alt"></i>
@@ -45,9 +51,9 @@
               <span class="menu-arrow arrow_carrot-right"></span>
             </a>
             <ul class="sub">
-              <li><a class="" href="form_component.html">Grade 9</a></li>
-              <li><a class="" href="form_validation.htmlGrade">Grade 8</a></li>
-              <li><a class="" href="form_validation.htmlGrade">Grade 7</a></li>
+              <?php while ($result = mysqli_fetch_assoc($class_plan)) : ?>
+                <li><a class="" href="<?= PROOT ?>admin/components/teacher_list.php?class=<?= $result['class_id'] ?>"><?= $result['grade_name']; ?></a></li>
+              <?php endwhile; ?>
             </ul>
           </li>
           <li class="sub-menu">

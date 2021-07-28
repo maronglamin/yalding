@@ -206,4 +206,5 @@ function htmlCardHead($divAttrs = [], $cardTitle)
 function cardClose()
 {
     $html = '</div></section></div></div>';
+    return $html;
 }

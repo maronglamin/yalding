@@ -12,6 +12,7 @@ $getNames = $db->query("SELECT * FROM `class_name`");
 $classNames = mysqli_fetch_assoc($getNames);
 
 $class = $db->query("SELECT * FROM `class_grade`");
+$class_plan = $db->query("SELECT * FROM `class_grade`");
 
 // getmethod to crap the id and select the right requested information
 if (isset($_GET['stud_id'])) {

@@ -75,7 +75,7 @@ if ($result['stud_fname'] == '') { ?>
             <tbody>
               <?php while ($info = mysqli_fetch_assoc($get_stud_adm_data_id)) : ?>
                 <div class="text-center profile-ava"><img class="simple wid" src="<?= PROOT . 'admission' . $info['path']; ?>" alt="image not found">
-                  <p>Profile Photo</p>
+                  <p><?= $info['stud_fname'] . ' ' . $info['stud_lname'] ?></p>
                 </div><br>
                 <tr>
                   <td>First Name</td>
@@ -84,6 +84,10 @@ if ($result['stud_fname'] == '') { ?>
                 <tr>
                   <td>Last Name</td>
                   <td><strong><?= $info['stud_lname']; ?></strong></td>
+                </tr>
+                <tr>
+                  <td>When we given you the school email, it shown here.</td>
+                  <td><strong><?= $info['new_email']; ?></strong></td>
                 </tr>
                 <tr>
                   <td>Email</td>

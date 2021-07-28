@@ -111,6 +111,11 @@ function time_format($date)
 {
   return date("D M, Y", strtotime($date));
 }
+
+function tim_format($date)
+{
+  return date("H:i", strtotime($date));
+}
 function selQuery($table, $id_field, $id)
 {
   global $db;
