@@ -12,25 +12,26 @@ include(ROOT . DS . "core" . DS . "admin_res" . DS . "aside.php");
 
 if (isset($_GET['class'])) {
     $id = (int)sanitize($_GET['class']);
-    $getClass = $db->query("SELECT * FROM `lesson_plan` WHERE class_id = $id");
-    if ($getClass) {
+    $getClass = $db->query("SELECT * FROM `assig_subj_techer` WHERE class_id = $id");
+    $new_getClass = $getClass;
+
+    if (mysqli_num_rows($new_getClass) != 0) {
         $data_values = [];
         foreach (mysqli_fetch_assoc($getClass) as $key => $data) {
             $data_values[$key] = $data;
         }
-        $teacher_id = $data_values['staff_id'];
-        $json = $data_values['first_record'];
-        $jsonValue = json_decode($json);
-
-        $entries = [];
-        foreach ($jsonValue as $jValue => $field) {
-            $entries[$jValue] = $field;
-        }
+        $teacher_id = $data_values['stuff_no'];
+        $subj = $data_values['subj_no'];
 
         $getteacher = $db->query("SELECT * FROM `staff` WHERE id = $teacher_id");
         $staff_values = [];
         foreach (mysqli_fetch_assoc($getteacher) as $keys => $staff_data) {
             $staff_values[$keys] = $staff_data;
+        }
+        $getSubject = $db->query("SELECT * FROM `subject_junior` WHERE `subj_no` = '{$subj}'");
+        $subj_values = [];
+        foreach (mysqli_fetch_assoc($getSubject) as $keys => $subj_data) {
+            $subj_values[$keys] = $subj_data;
         }
 
         print page_name('lesson planned by classes'); ?>
@@ -53,8 +54,8 @@ if (isset($_GET['class'])) {
                     <tbody>
                         <tr>
                             <td><?= $staff_values['full_name']; ?></td>
-                            <td><?= $entries['subject']; ?></td>
-                            <td><a href="?details=<?= $data_values['id'] ?>" class="btn btn-primary">Details</a></td>
+                            <td><?= $subj_values['subj_name']; ?></td>
+                            <th></th>
                         </tr>
                     </tbody>
                 </table>

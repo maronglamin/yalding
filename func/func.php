@@ -109,7 +109,7 @@ function day_month($date)
 
 function time_format($date)
 {
-  return date("D M, Y", strtotime($date));
+  return date("d M, Y", strtotime($date));
 }
 
 function tim_format($date)
