@@ -38,6 +38,17 @@
               <?php endwhile; ?>
             </ul>
           </li>
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+              <i class="icon_document_alt"></i>
+              <span>Subject</span>
+              <span class="menu-arrow arrow_carrot-right"></span>
+            </a>
+            <ul class="sub">
+              <li><a class="" href="add_subj.php">Add subjects</a></li>
+              <li><a class="" href="subject_list.php">Subjects</a></li>
+            </ul>
+          </li>
           <li>
             <a class="" href="<?= PROOT ?>admin/components/teacher.php">
               <i class="icon_genius"></i>
@@ -56,30 +67,11 @@
               <?php endwhile; ?>
             </ul>
           </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-              <i class="icon_desktop"></i>
-              <span>Scheme Work</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
+          <li>
+            <a class="" href="view_plan.php">
+              <i class="icon_genius"></i>
+              <span>View Plan</span>
             </a>
-            <ul class="sub">
-              <li><a class="" href="form_component.html">Grade 9</a></li>
-              <li><a class="" href="form_validation.htmlGrade">Grade 8</a></li>
-              <li><a class="" href="form_validation.htmlGrade">Grade 7</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-              <i class="icon_table"></i>
-              <span>Get Grades</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
-            </a>
-            <ul class="sub">
-              <li><a class="" href="form_component.html">Grade 9</a></li>
-              <li><a class="" href="form_validation.htmlGrade">Grade 8</a></li>
-              <li><a class="" href="form_validation.htmlGrade">Grade 7</a></li>
-
-            </ul>
           </li>
         </ul>
         <!-- sidebar menu end-->

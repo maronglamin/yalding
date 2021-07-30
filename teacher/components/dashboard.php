@@ -15,7 +15,7 @@ print page_name('Dashboard');
 $id = $user_data['id'];
 $ids = $user_data['id'];
 
-$sql = $db->query("SELECT * FROM `lesson_plan` WHERE `staff_id` = '{$id}'");
+$sql = $db->query("SELECT * FROM `lesson_plan` WHERE `staff_id` = '{$id}' LIMIT 10");
 
 if (isset($_GET['submit'])) {
   $id = (int)sanitize($_GET['submit']);

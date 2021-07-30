@@ -6,42 +6,54 @@ if (!is_logged_in()) {
     login_error_redirect("../index.php", "Dashboard");
 }
 
-include(ROOT . DS . "core" . DS . "teacher_res" . DS . "topnav.php");
-include(ROOT . DS . "core" . DS . "teacher_res" . DS . "aside.php");
+// load the two navigation sections
+include(ROOT . DS . "core" . DS . "admin_res" . DS . "topnav.php");
+include(ROOT . DS . "core" . DS . "admin_res" . DS . "aside.php");
 
-$id = $user_data['id'];
-$sql = $db->query("SELECT * FROM `assig_subj_techer` WHERE `stuff_no` = $id");
+$lessonPlan = $db->query("SELECT * FROM `lesson_plan` WHERE `permit` = 1 LIMIT 5");
 
-print page_name('My classes information');
-?>
 
-<div class="col-lg-8 col-sm-offset-2">
+print page_name('Assign teachers to a class');?>
+
+
+<div class="col-lg-12">
     <!--Project Activity start-->
     <section class="panel">
         <div class="panel-body progress-panel">
             <div class="row">
                 <div class="col-lg-8 task-progress pull-left">
-                    <h1>My class and subject list</h1>
+                    <h1>TEACHING MATERIALS</h1>
+                </div>
+                <div class="col-lg-4">
+                    <span class="profile-ava pull-right">
+                        <img alt="" class="simple" src="<?= PROOT ?>img/avatar1_small.jpg">
+                        <?= $user_data['first']; ?>
+                    </span>
                 </div>
             </div>
         </div>
         <table class="table table-hover personal-task">
             <thead>
-                <th>The class and Grade</th>
-                <th>Subject taken </th>
-                <th></th>
+                <th>DATES</th>
+                <th>Start Time</th>
+                <th>Period</th>
+                <th>Class</th>
+                <th>Subject</th>
+                <th>Unit Topic</th>
+                <th>Details</th>
             </thead>
             <tbody>
-
-                <?php while ($result = mysqli_fetch_assoc($sql)) :
-                    $id = $result['subj_no'];
-                    $qry = $db->query("SELECT * FROM `subject_junior` WHERE `subj_no` = $id");
+                <?php while ($result = mysqli_fetch_assoc($lessonPlan)) :
+                    $plan_data = json_decode($result['first_record']);
                     $plans = [];
-                    foreach (mysqli_fetch_assoc($qry) as $key => $plan) {
+                    foreach ($plan_data as $key => $plan) {
                         $plans[$key] = $plan;
                     }
                 ?>
                     <tr>
+                        <td><?= day_month($result['planed_date']); ?></td>
+                        <td><?= $plans['start-time']; ?></td>
+                        <td><?= $plans['period'] . ' Periods'; ?></td>
                         <?php if ($result['class_id'] == 1) : ?>
                             <td>Grade 7 Circle</td>
                         <?php elseif ($result['class_id'] == 2) : ?>
@@ -55,15 +67,15 @@ print page_name('My classes information');
                         <?php elseif ($result['class_id'] == 6) : ?>
                             <td>Grade 9 Square</td>
                         <?php endif; ?>
-                        <td><?= $plans['subj_name']; ?></td>
-                        <td></td>
+                        <td><?= $plans['subject']; ?></td>
+                        <td><?= $plans['unit-topic']; ?></td>
+                        <td>
+                            <a href="dashboard.php?plan=<?= $result['id'] ?>" class="btn btn-primary">checkout</a>
+                        </td>
                     </tr>
                 <?php endwhile; ?>
-
             </tbody>
         </table>
     </section>
     <!--Project Activity end-->
 </div>
-
-<?php include(ROOT . DS . "core" . DS . "res" . DS . "footer.php");
