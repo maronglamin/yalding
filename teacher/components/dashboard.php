@@ -1,4 +1,5 @@
 <?php
+# create connection
 require_once $_SERVER['DOCUMENT_ROOT'] . '/yalding/core/init.php';
 
 // check if the user is logged in before accessing the page

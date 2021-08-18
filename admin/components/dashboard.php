@@ -13,6 +13,16 @@ $id = (int)$user_data['adm_no'];
 $sql = $db->query("SELECT * FROM `administrators` WHERE `adm_no` = $id");
 $arr = array();
 
+$enroll = $db->query("SELECT * FROM `stud_adm_info` WHERE enrolled = 1");
+$enroll_count = mysqli_num_rows($enroll);
+
+$unenroll = $db->query("SELECT * FROM `stud_adm_info` WHERE enrolled = 0");
+$unenroll_count = mysqli_num_rows($unenroll);
+
+$teach = $db->query("SELECT * FROM `staff` WHERE permitted = 1");
+$teach_count = mysqli_num_rows($teach);
+
+
 $results = mysqli_fetch_assoc($sql);
 
 $lessonPlan = $db->query("SELECT * FROM `lesson_plan` WHERE `permit` = 1 LIMIT 5");
@@ -93,7 +103,7 @@ if (isset($_GET['plan'])) {
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
       <div class="info-box blue-bg">
         <i class="fa fa-cloud-download"></i>
-        <div class="count">10099</div>
+        <div class="count"><?= number_format($enroll_count) ?></div>
         <div class="title">ENROLLED STUDENT CLASS</div>
       </div>
       <!--/.info-box-->
@@ -103,7 +113,7 @@ if (isset($_GET['plan'])) {
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
       <div class="info-box brown-bg">
         <i class="fa fa-shopping-cart"></i>
-        <div class="count">2</div>
+        <div class="count"><?= number_format($teach_count) ?></div>
         <div class="title">TEACHING STAFF</div>
       </div>
       <!--/.info-box-->
@@ -113,7 +123,7 @@ if (isset($_GET['plan'])) {
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
       <div class="info-box green-bg">
         <i class="fa fa-cubes"></i>
-        <div class="count">4</div>
+        <div class="count"><?= number_format($unenroll_count) ?></div>
         <div class="title">Unproccess Applicants</div>
       </div>
       <!--/.info-box-->

@@ -10,31 +10,23 @@ if (!is_logged_in()) {
 include(ROOT . DS . "core" . DS . "admin_res" . DS . "topnav.php");
 include(ROOT . DS . "core" . DS . "admin_res" . DS . "aside.php");
 
+if (isset($_GET['delete'])) {
+    $id = (int)sanitize($_GET['delete']);
+    $classid = (int)sanitize($_GET['classId']);
+    $db->query("DELETE FROM `assig_subj_techer` WHERE `id` = $id");
+    $_SESSION['success_mesg'] .= 'Teacher teacher deleted!';
+    redirect('teacher_list.php?class=' . $classid);/*  */
+}
+
 if (isset($_GET['class'])) {
     $id = (int)sanitize($_GET['class']);
     $getClass = $db->query("SELECT * FROM `assig_subj_techer` WHERE class_id = $id");
     $new_getClass = $getClass;
 
     if (mysqli_num_rows($new_getClass) != 0) {
-        $data_values = [];
-        foreach (mysqli_fetch_assoc($getClass) as $key => $data) {
-            $data_values[$key] = $data;
-        }
-        $teacher_id = $data_values['stuff_no'];
-        $subj = $data_values['subj_no'];
+        print page_name('lesson planned by classes');
 
-        $getteacher = $db->query("SELECT * FROM `staff` WHERE id = $teacher_id");
-        $staff_values = [];
-        foreach (mysqli_fetch_assoc($getteacher) as $keys => $staff_data) {
-            $staff_values[$keys] = $staff_data;
-        }
-        $getSubject = $db->query("SELECT * FROM `subject_junior` WHERE `subj_no` = '{$subj}'");
-        $subj_values = [];
-        foreach (mysqli_fetch_assoc($getSubject) as $keys => $subj_data) {
-            $subj_values[$keys] = $subj_data;
-        }
-
-        print page_name('lesson planned by classes'); ?>
+?>
         <div class="col-lg-10 col-sm-offset-1">
             <!--Project Activity start-->
             <section class="panel">
@@ -52,11 +44,29 @@ if (isset($_GET['class'])) {
                         <th></th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><?= $staff_values['full_name']; ?></td>
-                            <td><?= $subj_values['subj_name']; ?></td>
-                            <th></th>
-                        </tr>
+                        <?php while ($data_values = mysqli_fetch_assoc($getClass)) :
+                            $teacher_id = $data_values['stuff_no'];
+                            $subj = $data_values['subj_no'];
+                            $tbId = $data_values['id'];
+
+                            $getteacher = $db->query("SELECT * FROM `staff` WHERE id = $teacher_id");
+                            $staff_values = [];
+                            foreach (mysqli_fetch_assoc($getteacher) as $keys => $staff_data) {
+                                $staff_values[$keys] = $staff_data;
+                            }
+                            $getSubject = $db->query("SELECT * FROM `subject_junior` WHERE `subj_no` = '{$subj}'");
+                            $subj_values = [];
+                            foreach (mysqli_fetch_assoc($getSubject) as $keys => $subj_data) {
+                                $subj_values[$keys] = $subj_data;
+                            }
+
+                        ?>
+                            <tr>
+                                <td><?= $staff_values['full_name']; ?></td>
+                                <td><?= $subj_values['subj_name']; ?></td>
+                                <td><a href="teacher_list.php?delete=<?= $tbId ?>&classId=<?= $id ?>" class="btn btn-danger">Delete</a></td>
+                            </tr>
+                        <?php endwhile; ?>
                     </tbody>
                 </table>
             </section>

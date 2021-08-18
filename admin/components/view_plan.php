@@ -13,7 +13,7 @@ include(ROOT . DS . "core" . DS . "admin_res" . DS . "aside.php");
 $lessonPlan = $db->query("SELECT * FROM `lesson_plan` WHERE `permit` = 1 LIMIT 5");
 
 
-print page_name('Assign teachers to a class');?>
+print page_name('Assign teachers to a class'); ?>
 
 
 <div class="col-lg-12">
@@ -79,3 +79,5 @@ print page_name('Assign teachers to a class');?>
     </section>
     <!--Project Activity end-->
 </div>
+
+<?php include(ROOT . DS . "core" . DS . "res" . DS . "footer.php");

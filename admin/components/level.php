@@ -29,8 +29,6 @@ if (isset($_GET['class'])) {
 
     print page_name('class records');
 
-    $divAttrs = ['class' => 'col-lg-10 col-sm-offset-1'];
-    print htmlCardHead($divAttrs, 'students in the class');
     print table_wrapper('Students');
 
     // assign the parameter values of the html table with action button. 
@@ -41,7 +39,6 @@ if (isset($_GET['class'])) {
 
     // load the table
     print htmlTableActionBtn($tableHead, $result, $fieldIndex, $url, $getVariable);
-    print cardClose();
 }
 
 include(ROOT . DS . "core" . DS . "res" . DS . "footer.php");
