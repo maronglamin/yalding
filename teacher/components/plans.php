@@ -51,7 +51,6 @@ $divAttrs = ['class' => 'col-lg-10 col-sm-offset-1']; ?>
             $dataValue = [
                 'staff'         => $staff_id,
                 'subject'       => $subject,
-                'class'         => $class,
                 'start-time'    => $start_time,
                 'end-time'      => $end_time,
                 'period'        => $period,
@@ -60,7 +59,7 @@ $divAttrs = ['class' => 'col-lg-10 col-sm-offset-1']; ?>
             ];
 
             $jSonDataValue = json_encode($dataValue);
-            $db->query("INSERT INTO `lesson_plan`(`staff_id`, `first_record`,`planed_date`) VALUES ('{$staff_id}','{$jSonDataValue}','{$date}')");
+            $db->query("INSERT INTO `lesson_plan`(`staff_id`, `class_id`, `first_record`,`planed_date`) VALUES ('{$staff_id}','{$class}','{$jSonDataValue}','{$date}')");
             $_SESSION['success_mesg'] .= 'First stage saved! contiune planning your lesson';
             redirect('dashboard.php');
         }
