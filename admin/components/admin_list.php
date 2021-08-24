@@ -16,7 +16,6 @@ $admins = $db->query("SELECT * FROM `administrators` WHERE `permission` = 0");
 if (isset($_GET['permit'])) {
     $id = (int)sanitize($_GET['permit']);
     $db->query("UPDATE `administrators` SET `permission` = '1' WHERE `adm_no` = '{$id}'");
-    $_SESSION['success_mesg'] .= 'save! Successfully permitted';
 }
 
 print page_name('Pending Administrators of the system'); ?>

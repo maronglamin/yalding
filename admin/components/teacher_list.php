@@ -18,7 +18,69 @@ if (isset($_GET['delete'])) {
     redirect('teacher_list.php?class=' . $classid);/*  */
 }
 
-if (isset($_GET['class'])) {
+if (isset($_GET['grades']) && $_GET['classId']) {
+    $subj = (int)sanitize($_GET['grades']);
+    $class_id = (int)sanitize($_GET['classId']);
+
+    $grades = $db->query("SELECT * FROM `stud_reports` WHERE `stud_class` = '{$class_id}' AND `subj` = '{$subj}'");
+
+    print page_name('Students Grades'); ?>
+    <div class="col-lg-10 col-sm-offset-1">
+        <!--Project Activity start-->
+        <section class="panel">
+            <div class="panel-body progress-panel">
+                <div class="row">
+                    <div class="col-lg-8 task-progress pull-left">
+                        <h1>Teachers and subject taken</h1>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover personal-task">
+                <thead>
+                    <th>Student Name</th>
+                    <th>First test</th>
+                    <th>Second test</th>
+                    <th>Exam</th>
+                    <th>total</th>
+                    <th>Grade</th>
+                </thead>
+                <tbody>
+                    <?php while ($stud = mysqli_fetch_assoc($grades)): 
+                        $totql_grade = (int)$stud['test1'] + (int)$stud['test2'] + (int)$stud['exam'];
+                        $stud_id = $stud['stud_no'];
+                        $stud_qty = $db->query("SELECT * FROM `stud_adm_info` WHERE `stud_id` = '{$stud_id}'");
+                        $value = mysqli_fetch_assoc($stud_qty);
+                        ?>
+                    <tr>
+                        <td><?=$value['stud_fname']. ' '. $value['stud_lname']?></td>
+                        <td><?=$stud['test1']?></td>
+                        <td><?=$stud['test2']?></td>
+                        <td><?=$stud['exam']?></td>
+                        <td><?=$totql_grade?></td>
+                        <td>
+                            <?php if ($totql_grade >= 80 && $totql_grade <= 100) :?>
+                                <strong>A</strong>
+                            <?php elseif ($totql_grade >= 70 && $totql_grade <= 79 ):?> 
+                                <strong>B</strong>   
+                            <?php elseif ($totql_grade >= 60 && $totql_grade <= 69 ):?>
+                                <strong>B</strong> 
+                            <?php elseif ($totql_grade >= 50 && $totql_grade <= 59 ):?>
+                                <strong>C</strong> 
+                            <?php elseif ($totql_grade >= 40 && $totql_grade <= 49 ):?> 
+                                <strong>D</strong>  
+                            <?php else:?>
+                                <strong>F</strong>
+                            <?php endif;?>
+                        </td>
+                    </tr>
+                    <?php endwhile;?>
+                </tbody>
+            </table>
+        </section>
+        <!--Project Activity end-->
+    </div>
+
+    <?php } else if (isset($_GET['class'])) {
     $id = (int)sanitize($_GET['class']);
     $getClass = $db->query("SELECT * FROM `assig_subj_techer` WHERE class_id = $id");
     $new_getClass = $getClass;
@@ -26,7 +88,7 @@ if (isset($_GET['class'])) {
     if (mysqli_num_rows($new_getClass) != 0) {
         print page_name('lesson planned by classes');
 
-?>
+    ?>
         <div class="col-lg-10 col-sm-offset-1">
             <!--Project Activity start-->
             <section class="panel">
@@ -64,7 +126,11 @@ if (isset($_GET['class'])) {
                             <tr>
                                 <td><?= $staff_values['full_name']; ?></td>
                                 <td><?= $subj_values['subj_name']; ?></td>
-                                <td><a href="teacher_list.php?delete=<?= $tbId ?>&classId=<?= $id ?>" class="btn btn-danger">Delete</a></td>
+                                <td>
+                                    <a href="teacher_list.php?grades=<?= $subj_values['subj_no'] ?>&classId=<?= $id ?>" class="btn btn-default">View Grades</a>
+                                    <a href="teacher_list.php?delete=<?= $tbId ?>&classId=<?= $id ?>" class="btn btn-danger">Delete</a>
+
+                                </td>
                             </tr>
                         <?php endwhile; ?>
                     </tbody>

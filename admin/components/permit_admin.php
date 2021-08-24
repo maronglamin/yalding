@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 print page_name('Permtted Administrators to the system'); ?>
 
 
-
+ 
 <div class="col-lg-8 col-sm-offset-2">
     <!--Project Activity start-->
     <section class="panel">
@@ -43,9 +43,7 @@ print page_name('Permtted Administrators to the system'); ?>
                 <tr>
                     <td><?= $p_admin['full_name']; ?></td>
                     <td><?= $p_admin['email']; ?></td>
-                    <td>
-                        <a href="admin_list.php?permit=<?= $subject['adm_no'] ?>" class="btn btn-primary">Permit</a>
-                    </td>
+                    <td>Permitted</td>
                 </tr>
             <?php endwhile; ?>
             <tbody>

@@ -9,58 +9,17 @@ if (!is_logged_in()) {
 include(ROOT . DS . "core" . DS . "teacher_res" . DS . "topnav.php");
 include(ROOT . DS . "core" . DS . "teacher_res" . DS . "aside.php");
 
+
 $id = $user_data['id'];
 $sql = $db->query("SELECT * FROM `assig_subj_techer` WHERE `stuff_no` = $id ORDER BY `class_id`");
 
 print page_name('My classes information');
 
-if (isset($_GET['add'])) {
-    $add_id = (int)sanitize($_GET['add']);
-    $class_id = (int)sanitize($_GET['class']); ?>
 
 
-    <div class="col-lg-8 col-sm-offset-2">
-        <section class="panel">
-            <!-- <div class="panel-body progress-panel">
-                <div class="row">
-                    <div class="col-lg-8 task-progress pull-left">
-                        <h1>My class and subject list</h1>
-                    </div>
-                </div>
-            </div> -->
-            <div><br>
-                <h4 class="text-center">Add Grades</h4>
-                <form class="form-horizontal" action="my_class.php" method="post">
-                    <div class="form-group">
-                        <label for="test1" class="control-label col-lg-2">first test</label>
-                        <div class="col-sm-10"">
-                <input type="number" min="0" max="25" name="test1" id="test1" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="test2" class="control-label col-lg-2">second test</label>
-                        <div class="col-sm-10"">
-                <input type="number" min="0" max="25" name="test2" id="test2" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="test1" class="control-label col-lg-2">Exams</label>
-                        <div class="col-sm-10"">
-                <input type="number" min="0" max="50" name="exams" id="exam" class="form-control">
-                        </div>
-                    </div>
-                    <input type="submit" class="btn btn-primary" value="Submit">
-                </form>
-            </div>
-        </section>
-    </div>
-
-<?php } else 
-        if (isset($_GET['edit'])) {
-    dnd($class_id = (int)sanitize($_GET['class']));
-} else 
-        if (isset($_GET['class'])) {
+if (isset($_GET['class']) && $_GET['subj']) {
     $class_id = (int)sanitize($_GET['class']);
+    $subj_id = (int)sanitize($_GET['subj']);
     $qry = $db->query("SELECT * FROM `stud_class` WHERE `stud_class` ='{$class_id}'"); ?>
 
     <div class="col-lg-12">
@@ -91,22 +50,40 @@ if (isset($_GET['add'])) {
 
                     <?php while ($result = mysqli_fetch_assoc($qry)) :
                         $id = $result['stud_adm_no'];
+                        $new_id = $result['stud_adm_no'];
+
                         $sql = $db->query("SELECT * FROM `stud_adm_info` WHERE `stud_id`= '{$id}'");
                         $infos = [];
                         foreach (mysqli_fetch_assoc($sql) as $key => $info) {
                             $infos[$key] = $info;
                         }
+
+                        $sql_qry = $db->query("SELECT * FROM `stud_reports` WHERE `stud_no`= '{$new_id}'");
+                        $intValues = [];
+                        if (mysqli_num_rows($sql_qry) != 0) {
+                            foreach (mysqli_fetch_assoc($sql_qry) as $key => $inVal) {
+                                $intValues[$key] = $inVal;
+                            }
+                        }
+
+                        $check_qry = $db->query("SELECT * FROM `stud_reports` WHERE `stud_no` = '{$result['stud_adm_no']}' AND `stud_class` = '{$result['stud_class']}'");
+                        $checks = mysqli_num_rows($check_qry)
                     ?>
                         <tr>
                             <td><?= $result['stud_number'] ?></td>
                             <td><?= $infos['stud_fname'] . ' ' . $infos['stud_lname'] ?></td>
-                            <td>24</td>
-                            <td>23</td>
-                            <td>47</td>
-                            <td>47</td>
-                            <td><strong>94</strong></td>
-                            <td><a href="my_class.php?add=<?= $result['stud_adm_no'] ?>&class=<?= $result['stud_class'] ?>" data-toggle="modal" class="btn btn-default">Grades</a></td>
-                            <td><a href="my_class.php?edit=<?= $result['stud_adm_no'] ?>&class=<?= $result['stud_class'] ?>" class="btn btn-primary">Edit</a></td>
+
+                            <td><?= (($checks == 0) ? '0' : $intValues['test1']) ?></td>
+                            <td><?= (($checks == 0) ? '0' : $intValues['test2']) ?></td>
+                            <td><?= (($checks == 0) ? '0' : (int)$intValues['test1'] + (int)$intValues['test2']) ?></td>
+                            <td><?= (($checks == 0) ? '0' : $intValues['exam']) ?></td>
+                            <td><strong><?= (($checks == 0) ? '0' : (int)$intValues['test1'] + (int)$intValues['test2'] + (int)$intValues['exam']) ?></strong></td>
+                            <td>
+                                <?php if ($checks == 0) : ?>
+                                    <a href="gradeData.php?add=<?= $result['stud_adm_no'] ?>&class=<?= $result['stud_class'] ?>&subj=<?= $subj_id ?>" class="btn btn-default">Grades</a>
+                                <?php endif; ?>
+                            </td>
+                            <td><a href="gradeData.php?edit=<?= $result['stud_adm_no'] ?>&class=<?= $result['stud_class'] ?>&subj=<?= $subj_id ?>" class="btn btn-primary">Edit</a></td>
                         </tr>
                     <?php endwhile; ?>
 
@@ -161,7 +138,7 @@ if (isset($_GET['add'])) {
                                 <td>Grade 9 Square</td>
                             <?php endif; ?>
                             <td><?= $plans['subj_name']; ?></td>
-                            <td><a href="my_class.php?class=<?= $result['class_id']; ?>" class="btn btn-primary">Students</a></td>
+                            <td><a href="my_class.php?class=<?= $result['class_id']; ?>&subj=<?= $plans['subj_no'] ?>" class="btn btn-primary">Students</a></td>
                         </tr>
                     <?php endwhile; ?>
 
